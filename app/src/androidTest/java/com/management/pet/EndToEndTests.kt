@@ -1,20 +1,29 @@
 package com.management.pet
 
+import androidx.compose.ui.test.hasAnySibling
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class EndToEndTests {
-
     /**
      * 펫 프로필 입력, 저장하지 않은 상태로 등록 취소
      */
     @Test
     fun insertPetProfileButCancel() {
+        val app = Application()
+
+        app.hasEmptyPets()
+        app.registeringPet("멍멍이 건우")
+        app.cancelRegistering()
+        app.hasEmptyPets()
+
 //        openApp()
-//        hasEmptyPets()
-//        registeringPet("멍멍이")
+//        hasEmptyPets() // 조회
+//        registeringPet("멍멍이") // 펫
 //        cancelRegistering()
 //        hasEmptyPet()
     }
