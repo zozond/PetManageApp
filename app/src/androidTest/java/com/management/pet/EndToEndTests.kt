@@ -17,7 +17,7 @@ class EndToEndTests {
         val app = Application()
 
         app.hasEmptyPets()
-        app.registeringPet("멍멍이 건우")
+        app.registeringPet("멍멍이")
         app.cancelRegistering()
         app.hasEmptyPets()
 
