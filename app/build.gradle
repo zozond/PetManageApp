@@ -1,22 +1,22 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id("org.jetbrains.kotlin.android")
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
     compileSdk 30
-    buildToolsVersion "30.0.3"
+    buildToolsVersion '30.0.3'
 
     defaultConfig {
-        applicationId "com.management.pet"
+        applicationId 'com.management.pet'
 
         targetSdk 30
         versionCode 1
-        versionName "1.0"
-        minSdkVersion(21)
+        versionName '1.0'
+        minSdkVersion 21
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     buildTypes {
@@ -26,16 +26,21 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = '11'
         useIR = true
     }
     composeOptions {
-        kotlinCompilerVersion = "1.4.32"
-        kotlinCompilerExtensionVersion = "1.0.0-beta07"
+        kotlinCompilerVersion = '1.4.32'
+        kotlinCompilerExtensionVersion = '1.0.0-beta07'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
     }
 
     buildFeatures {
@@ -44,32 +49,34 @@ android {
     }
 }
 
-
 dependencies {
-    implementation("androidx.compose.ui:ui:1.0.0-beta07")
+    implementation 'androidx.compose.ui:ui:1.0.0-beta09'
     // Tooling support (Previews, etc.)
-    implementation("androidx.compose.ui:ui-tooling:1.0.0-beta07")
+    implementation 'androidx.compose.ui:ui-tooling:1.0.0-beta09'
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation("androidx.compose.foundation:foundation:1.0.0-beta07")
+    implementation 'androidx.compose.foundation:foundation:1.0.0-beta09'
     // Material Design
-    implementation("androidx.compose.material:material:1.0.0-beta07")
+    implementation 'androidx.compose.material:material:1.0.0-beta09'
     // Material design icons
-    implementation("androidx.compose.material:material-icons-core:1.0.0-beta07")
-    implementation("androidx.compose.material:material-icons-extended:1.0.0-beta07")
+    implementation 'androidx.compose.material:material-icons-core:1.0.0-beta09'
+    implementation 'androidx.compose.material:material-icons-extended:1.0.0-beta09'
     // Integration with observables
-    implementation("androidx.compose.runtime:runtime-livedata:1.0.0-beta07")
-    implementation("androidx.compose.runtime:runtime-rxjava2:1.0.0-beta07")
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-beta09'
+    implementation 'androidx.compose.runtime:runtime-rxjava2:1.0.0-beta09'
 
-    // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.0-beta07")
-
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+
+    implementation 'androidx.activity:activity-compose:1.3.0-beta02'
+
     testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // UI Tests
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.0-beta09'
 }
