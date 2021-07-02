@@ -23,4 +23,9 @@ class UiTests {
         app.openApp()
         app.hasTitle("PetManagement")
     }
+
+    @Test
+    fun hasPetList(){
+        app.hasPetList();
+    }
 }

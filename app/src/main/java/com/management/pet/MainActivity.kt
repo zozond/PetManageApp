@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.Composable
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,11 +16,18 @@ class MainActivity : AppCompatActivity() {
                 topBar = {
                     TopAppBar(
                         title = {
-                            Text(text = "PetManagement")
+                            Text(text = "Pet Management App")
                         }
                     )
                 }
-            ) {}
+            ) {
+
+            }
         }
     }
+}
+
+@Composable
+fun PetList(){
+
 }

@@ -28,7 +28,7 @@ class EndToEndTests {
 
         app.openApp()
         app.hasEmptyPets()
-        app.registerPet(pet)
+//        app.registerPet(pet)
         app.hasPet(pet)
     }
 

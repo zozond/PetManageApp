@@ -24,12 +24,17 @@ class Application(
         composeRule.onNodeWithText(pet).assertExists()
     }
 
-    fun registerPet(pet: String) {
-        val petRepository: PetRepository = PetSharedPreference()
-        petRepository.add(pet)
-    }
+//    fun registerPet(pet: String) {
+//        val petRepository: PetRepository = PetSharedPreference()
+//        petRepository.add(pet)
+//    }
 
     fun hasTitle(s: String) {
         composeRule.onNodeWithText(s).assertIsDisplayed()
     }
+
+    fun hasPetList() {
+        composeRule.onNodeWithText("Pet List").assertExists()
+    }
+
 }
