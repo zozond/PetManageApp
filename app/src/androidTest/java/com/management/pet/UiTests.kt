@@ -9,13 +9,14 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class UiTests {
+
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
     lateinit var app: Application
 
     @Before
     fun setUp() {
-        app = Application(composeTestRule)
+//        app = Application(composeTestRule, )
     }
 
     @Test
@@ -26,6 +27,5 @@ class UiTests {
 
     @Test
     fun hasPetList(){
-        app.hasPetList();
     }
 }

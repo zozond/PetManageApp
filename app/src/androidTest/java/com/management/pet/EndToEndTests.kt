@@ -3,6 +3,7 @@ package com.management.pet
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -16,7 +17,12 @@ class EndToEndTests {
 
     @Before
     fun setUp() {
-        app = Application(composeTestRule)
+        app = Application(composeTestRule, InstrumentationRegistry.getInstrumentation().targetContext)
+    }
+
+    @Test
+    fun getPetListAndShow(){
+        app.hasPetList(PetList)
     }
 
     /**
@@ -25,7 +31,6 @@ class EndToEndTests {
     @Test
     fun insertPetProfileThenRegisterSuccess() {
         val pet = "멍멍이"
-
         app.openApp()
         app.hasEmptyPets()
 //        app.registerPet(pet)
