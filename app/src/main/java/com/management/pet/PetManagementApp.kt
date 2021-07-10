@@ -19,13 +19,13 @@ fun PetManagementApp (
             )
         }
     ) {
-        renderPetList(petList)
+        PetList(petList)
     }
 }
 
 @Composable
-fun renderPetList(petList : List<String>){
-    Column() {
+fun PetList(petList : List<String>) {
+    Column {
         Text(text = "Pet Lists")
         petList.forEach {
             Text(text = it)

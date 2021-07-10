@@ -1,6 +1,5 @@
 package com.management.pet
 
-import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -13,16 +12,25 @@ import org.junit.runner.RunWith
 class EndToEndTests {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
+
     lateinit var app: Application
+    lateinit var resourceManager: ResourceManager
 
     @Before
     fun setUp() {
         app = Application(composeTestRule, InstrumentationRegistry.getInstrumentation().targetContext)
+        resourceManager = ResourceManager()
     }
 
+    /**
+     * 저장된 반려동물 리스트 불러오기
+     */
     @Test
-    fun getPetListAndShow(){
-        app.hasPetList(PetList)
+    fun restoreSavedPetList() {
+        val pets = listOf("1", "2", "3")
+
+        resourceManager.loadPets(pets)
+        app.hasPetList(pets)
     }
 
     /**
