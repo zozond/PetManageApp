@@ -1,8 +1,12 @@
 package com.management.pet
 
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -18,71 +22,27 @@ class EndToEndTests {
 
     @Before
     fun setUp() {
-        app = Application(composeTestRule, InstrumentationRegistry.getInstrumentation().targetContext)
+        app = Application(composeTestRule);
         resourceManager = ResourceManager()
     }
 
-    /**
-     * 저장된 반려동물 리스트 불러오기
-     */
+    //    - 펫 프로필(이름): 불러오기
     @Test
-    fun restoreSavedPetList() {
+    fun loadPetProfiles() {
         val pets = listOf("1", "2", "3")
-
         resourceManager.loadPets(pets)
-        app.hasPetList(pets)
+        app.openApp()
+        for(pet in pets){
+            app.hasPet(pet)
+        }
     }
 
-    /**
-     * 펫 프로필 입력, 저장 및 저장 성공
-     * */
+    //     - 펫 프로필(이름): 저장
     @Test
-    fun insertPetProfileThenRegisterSuccess() {
-        val pet = "멍멍이"
+    fun loadPetProfilesAndThenSavePetProfile() {
+        val pet = "왜 이리 죽상이야?"
         app.openApp()
-        app.hasEmptyPets()
-//        app.registerPet(pet)
+        resourceManager.registerPet(pet)
         app.hasPet(pet)
     }
-
-    /**
-     * 스케쥴 입력, 저장하지 않은 상태로 등록취소
-     * */
-    @Test
-    fun insertScheduleButCancel() {
-
-    }
-
-    /**
-     * 스케쥴 입력, 저장 및 저장 실패
-     */
-    @Test
-    fun insertScheduleThenRegisterFail() {
-
-    }
-
-    /**
-     * 스케쥴 입력, 저장 및 저장 성공
-     */
-    @Test
-    fun insertPetProfileThenSuccess() {
-
-    }
-
-    /**
-     * 스케쥴 시간이 되면 알림 울림
-     */
-    @Test
-    fun alarmAtScheduledTime() {
-
-    }
-
-    /**
-     * 툴팁 정보 추가
-     */
-    @Test
-    fun addToolTipInfo() {
-
-    }
-
 }

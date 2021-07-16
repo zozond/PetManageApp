@@ -5,34 +5,17 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.ComposeTestRule
 
 class Application(
-    private val composeRule: ComposeTestRule,
-    private val context: Context
+    private val composeRule: ComposeTestRule
 ) {
-
-    fun hasEmptyPets() {
-        composeRule
-            .onNode(hasTestTag("Pets"))
-            .onChildren()
-            .assertCountEquals(0)
-    }
-
     fun openApp() {
-
+        composeRule.waitForIdle()
     }
 
     fun hasPet(pet: String) {
-        composeRule.onNodeWithText(pet).assertExists()
+        composeRule.onNodeWithText(pet).assertIsDisplayed()
     }
 
     fun hasTitle(s: String) {
         composeRule.onNodeWithText(s).assertIsDisplayed()
     }
-
-    fun hasPetList(l: List<String>) {
-        composeRule.onNodeWithText("Pet Lists").assertExists()
-        for(i in l){
-            composeRule.onNodeWithText(i).assertExists()
-        }
-    }
-
 }

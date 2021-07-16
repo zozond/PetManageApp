@@ -1,3 +1,3 @@
 package com.management.pet
 
-var PetList: List<String>? = null
+var PetList: List<String>? = listOf("james", "aya", "peter")
