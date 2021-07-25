@@ -1,25 +1,21 @@
 package com.management.pet
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun PetManagementApp () {
     val navController = rememberNavController()
-    var petListState: PetListState by remember { mutableStateOf(PetListState(MemoryPetDataSource.value)) }
-    val petDataSource: PetDataSource by remember {
-        MemoryPetDataSource.observe {
+    var petListState: PetListState by remember { mutableStateOf(PetListState(MemoryPetProfileDataSource.value)) }
+    val petDataSource: PetProfileDataSource by remember {
+        MemoryPetProfileDataSource.observe {
             petListState = PetListState(it)
         }
-        mutableStateOf(MemoryPetDataSource)
+        mutableStateOf(MemoryPetProfileDataSource)
     }
 
     MainScreen(petListState, navController)

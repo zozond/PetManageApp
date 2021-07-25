@@ -12,7 +12,7 @@ class UiTests {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
-    lateinit var app: Application
+    lateinit var app: ApplicationRunner
 
     @Before
     fun setUp() {

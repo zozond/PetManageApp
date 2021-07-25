@@ -62,7 +62,7 @@ fun PetList(petListState: PetListState, navController: NavHostController) {
             Row() {
                 petListState.pets.forEach {
                     Button(onClick = { } ){
-                        Text(text = it)
+                        Text(text = it.name)
                     }
                 }
                 Button(onClick = { navController.navigate("register") }) {

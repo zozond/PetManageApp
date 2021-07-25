@@ -1,5 +1,5 @@
 package com.management.pet
 
 class PetListState(
-    val pets: List<String>
+    val pets: List<PetProfile>
 )

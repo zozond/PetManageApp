@@ -1,12 +1,7 @@
 package com.management.pet
 
-import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -17,32 +12,64 @@ class EndToEndTests {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-    lateinit var app: Application
-    lateinit var resourceManager: ResourceManager
+    private lateinit var app: ApplicationRunner
+    private lateinit var resourceManager: ResourceManager
 
     @Before
     fun setUp() {
-        app = Application(composeTestRule);
+        app = ApplicationRunner(composeTestRule)
         resourceManager = ResourceManager()
     }
 
-    //    - 펫 프로필(이름): 불러오기
+    // 펫 프로필(이름): 불러오기
     @Test
     fun loadPetProfiles() {
-        val pets = listOf("1", "2", "3")
-        resourceManager.loadPets(pets)
+        val petProfiles = listOf(PetProfile("dog"),
+            PetProfile("cat"),
+            PetProfile("bird"))
+        resourceManager.loadPetProfiles(petProfiles)
+
         app.openApp()
-        for(pet in pets){
-            app.hasPet(pet)
+        for(pet in petProfiles){
+            app.hasPetProfile(pet)
         }
     }
 
-    //     - 펫 프로필(이름): 저장
+    // 펫 프로필(이름): 저장
     @Test
     fun loadPetProfilesAndThenSavePetProfile() {
-        val pet = "왜 이리 죽상이야?"
+        val petProfile = PetProfile("dog")
+
         app.openApp()
-        resourceManager.registerPet(pet)
-        app.hasPet(pet)
+        resourceManager.registerPetProfile(petProfile)
+        app.hasPetProfile(petProfile)
+    }
+
+    // 펫 프로필(이름): 삭제
+    @Test
+    fun loadPetProfilesAndThenRemovePetProfiles() {
+        val petProfiles = listOf(PetProfile("dog"))
+        val dog = PetProfile("dog")
+        resourceManager.loadPetProfiles(petProfiles)
+
+        app.openApp()
+        resourceManager.removePetProfile(dog)
+        app.hasNotPetProfile(dog)
+    }
+
+    // 펫 프로필(이름): 수정
+    @Test
+    fun loadPetProfilesAndThenUpdatePetProfiles() {
+        // TODO("동일성 테스트가 필요합니다")
+        val dog = PetProfile("dog")
+        val doge = PetProfile("doge")
+        val petProfiles = listOf(dog)
+
+        resourceManager.loadPetProfiles(petProfiles)
+
+        app.openApp()
+        resourceManager.updatePetProfile(dog, "doge")
+        app.hasNotPetProfile(dog)
+        app.hasPetProfile(doge)
     }
 }
