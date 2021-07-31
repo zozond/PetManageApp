@@ -1,4 +1,4 @@
-package com.management.pet
+package com.management.pet.repository
 
 data class PetProfile(
     val name: String

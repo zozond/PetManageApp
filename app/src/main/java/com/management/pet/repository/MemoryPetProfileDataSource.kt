@@ -1,4 +1,4 @@
-package com.management.pet
+package com.management.pet.repository
 
 object MemoryPetProfileDataSource: PetProfileDataSource {
     private val pets = mutableListOf<PetProfile>()

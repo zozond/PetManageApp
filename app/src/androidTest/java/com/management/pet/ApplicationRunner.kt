@@ -2,6 +2,7 @@ package com.management.pet
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import com.management.pet.repository.PetProfile
 
 class ApplicationRunner(
     private val composeRule: ComposeTestRule

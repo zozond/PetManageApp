@@ -1,5 +1,9 @@
 package com.management.pet
 
+import com.management.pet.repository.DataSource
+import com.management.pet.repository.MemoryPetProfileDataSource
+import com.management.pet.repository.PetProfile
+
 class ResourceManager {
     private val petDataSource: DataSource<MutableList<PetProfile>> = MemoryPetProfileDataSource
 
@@ -22,10 +26,10 @@ class ResourceManager {
         }
     }
 
-    fun updatePetProfile(petProfile: PetProfile, name: String) {
+    fun updatePetProfile(before: PetProfile, after: PetProfile) {
         petDataSource.update {
-            val i = indexOf(petProfile)
-            set(i, petProfile.setName(name))
+            val i = indexOf(before)
+            set(i, after)
         }
     }
 }
