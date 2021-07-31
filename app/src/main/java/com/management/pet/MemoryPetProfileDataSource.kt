@@ -1,5 +1,7 @@
 package com.management.pet
 
+import com.management.pet.entity.PetProfile
+
 object MemoryPetProfileDataSource: PetProfileDataSource {
     private val pets = mutableListOf<PetProfile>()
     private var petListener: DataSourceListener<MutableList<PetProfile>>? = null

@@ -22,7 +22,7 @@ class UiTests {
     @Test
     fun hasTitle() {
         app.openApp()
-        app.hasTitle("PetManagement")
+        app.displayTitle("PetManagement")
     }
 
     @Test

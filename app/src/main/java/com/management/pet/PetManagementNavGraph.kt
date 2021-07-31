@@ -26,7 +26,7 @@ object MainDestinations {
 @Composable
 fun PetManagementNavGraph(
     navController: NavHostController,
-    petList : PetListState
+    petList: PetListState
 ) {
     NavHost(
         navController = navController,
@@ -61,7 +61,7 @@ fun PetList(petListState: PetListState, navController: NavHostController) {
             Text(text = "Pet Lists")
             Row() {
                 petListState.pets.forEach {
-                    Button(onClick = { } ){
+                    Button(onClick = { }) {
                         Text(text = it.name)
                     }
                 }

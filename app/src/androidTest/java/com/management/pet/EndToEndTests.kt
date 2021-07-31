@@ -2,6 +2,7 @@ package com.management.pet
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.management.pet.entity.PetProfile
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -24,9 +25,11 @@ class EndToEndTests {
     // 펫 프로필(이름): 불러오기
     @Test
     fun loadPetProfiles() {
-        val petProfiles = listOf(PetProfile("dog"),
+        val petProfiles = listOf(
+            PetProfile("dog"),
             PetProfile("cat"),
-            PetProfile("bird"))
+            PetProfile("bird")
+        )
         resourceManager.loadPetProfiles(petProfiles)
 
         app.openApp()
@@ -68,8 +71,7 @@ class EndToEndTests {
         resourceManager.loadPetProfiles(petProfiles)
 
         app.openApp()
-        resourceManager.updatePetProfile(dog, "doge")
-        app.hasNotPetProfile(dog)
-        app.hasPetProfile(doge)
+        resourceManager.registerPet(pet)
+        app.hasPet(pet)
     }
 }
