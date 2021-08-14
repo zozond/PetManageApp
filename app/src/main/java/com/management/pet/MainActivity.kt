@@ -10,24 +10,21 @@ import com.management.pet.repository.entity.PetProfile
 import com.management.pet.repository.entity.Sex
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        launch(Dispatchers.IO) {
-            val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database.db")
-                .build()
-
-            val profile = PetProfile(2, "강아지 강2", Sex.Male,
-                1,"","","","","",
-                "","","")
+        MainScope().launch(Dispatchers.IO){
+            val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database.db").build()
+            val profile = PetProfile( "미야옹철")
 
             db.petProfileDAO().save(profile);
-            Log.d("debuginginginging", db.petProfileDAO().getAll().toString())
+            Log.d("debuging", db.petProfileDAO().getAll().toString())
         }
 
         setContent {
@@ -35,7 +32,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun launch(io: CoroutineDispatcher, function: () -> Unit) {
-
-    }
 }
