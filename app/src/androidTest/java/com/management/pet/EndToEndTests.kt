@@ -2,11 +2,13 @@ package com.management.pet
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.management.pet.repository.PetProfile
+import com.management.pet.repository.entity.PetProfile
+import com.management.pet.repository.entity.Schedule
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)
 class EndToEndTests {
@@ -17,6 +19,12 @@ class EndToEndTests {
     private lateinit var resourceManager: ResourceManager
 
     val profiles = listOf(PetProfile("dog"), PetProfile("cat"), PetProfile("bird"))
+
+    val schedules = listOf(
+            Schedule("first", LocalDate.now()),
+            Schedule("second", LocalDate.now()),
+            Schedule("third", LocalDate.now())
+        )
 
     @Before
     fun setUp() {
@@ -78,4 +86,61 @@ class EndToEndTests {
         app.hasNotPetProfile(beforeProfile)
         app.hasPetProfile(afterProfile)
     }
+
+    /**
+     *  - 스케줄(이름, 시간): 저장
+     * */
+    @Test
+    fun saveSchedule() {
+        val schedule = Schedule("test", LocalDate.now());
+
+        app.openApp()
+        resourceManager.registerSchedule(schedule)
+        app.hasSchedule(schedule)
+    }
+
+    /**
+     *  - 스케줄(이름, 시간): 불러오기
+     * */
+    @Test
+    fun loadSchedule() {
+        resourceManager.loadSchedule(schedules)
+
+        app.openApp()
+        for(schedule in schedules){
+            app.hasSchedule(schedule)
+        }
+    }
+
+    /**
+     *  - 스케줄(이름, 시간): 삭제
+     * */
+    @Test
+    fun removeSchedule() {
+        val removedSchedule = schedules.get(0)
+        resourceManager.loadSchedule(schedules)
+
+        app.openApp()
+        resourceManager.removeSchedule(removedSchedule)
+        app.hasNotSchedule(removedSchedule)
+    }
+
+    /**
+     *  - 스케줄(이름, 시간): 수정
+     * */
+    @Test
+    fun modifySchedule() {
+        // TODO("동일성 테스트가 필요합니다")
+        val beforeSchedule = schedules.get(0)
+        val afterSchedule = Schedule("forth", LocalDate.now())
+
+        resourceManager.loadSchedule(schedules)
+        app.openApp()
+
+        resourceManager.updateSchedule(beforeSchedule, afterSchedule)
+        app.hasNotSchedule(beforeSchedule)
+        app.hasSchedule(afterSchedule)
+    }
+
+
 }
