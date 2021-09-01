@@ -36,4 +36,5 @@ class ApplicationRunner(
     fun hasNotSchedule(schedule: Schedule) {
         composeRule.onNodeWithText(schedule.name).assertDoesNotExist()
     }
+
 }

@@ -8,7 +8,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.time.LocalDate
+import java.time.*
 
 @RunWith(AndroidJUnit4::class)
 class EndToEndTests {
@@ -21,9 +21,9 @@ class EndToEndTests {
     val profiles = listOf(PetProfile("dog"), PetProfile("cat"), PetProfile("bird"))
 
     val schedules = listOf(
-            Schedule("first", LocalDate.now()),
-            Schedule("second", LocalDate.now()),
-            Schedule("third", LocalDate.now())
+            Schedule("first", LocalDate.now(), Duration.ZERO),
+            Schedule("second", LocalDate.now(), Duration.ZERO),
+            Schedule("third", LocalDate.now(), Duration.ZERO)
         )
 
     @Before
@@ -92,11 +92,12 @@ class EndToEndTests {
      * */
     @Test
     fun saveSchedule() {
-        val schedule = Schedule("test", LocalDate.now());
+        val schedule = Schedule("test", LocalDate.now(), Duration.ZERO);
 
         app.openApp()
         resourceManager.registerSchedule(schedule)
         app.hasSchedule(schedule)
+
     }
 
     /**
@@ -132,7 +133,7 @@ class EndToEndTests {
     fun modifySchedule() {
         // TODO("동일성 테스트가 필요합니다")
         val beforeSchedule = schedules.get(0)
-        val afterSchedule = Schedule("forth", LocalDate.now())
+        val afterSchedule = Schedule("forth", LocalDate.now(), Duration.ZERO)
 
         resourceManager.loadSchedule(schedules)
         app.openApp()
@@ -141,6 +142,4 @@ class EndToEndTests {
         app.hasNotSchedule(beforeSchedule)
         app.hasSchedule(afterSchedule)
     }
-
-
 }
