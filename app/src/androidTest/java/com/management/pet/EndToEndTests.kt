@@ -18,7 +18,7 @@ class EndToEndTests {
     private lateinit var app: ApplicationRunner
     private lateinit var resourceManager: ResourceManager
 
-    val profiles = listOf(PetProfile("dog"), PetProfile("cat"), PetProfile("bird"))
+    private val profiles = listOf(PetProfile("dog"), PetProfile("cat"), PetProfile("bird"))
 
     val schedules = listOf(
             Schedule("first", LocalDate.now(), Duration.ZERO),
@@ -76,8 +76,8 @@ class EndToEndTests {
     @Test
     fun loadPetProfilesAndThenUpdatePetProfiles() {
         // TODO("동일성 테스트가 필요합니다")
-        val beforeProfile = profiles.get(0)
-        val afterProfile = PetProfile("doge")
+        val beforeProfile = profiles[0]
+        val afterProfile = beforeProfile.setName("cat")
 
         resourceManager.loadPetProfiles(profiles)
         app.openApp()

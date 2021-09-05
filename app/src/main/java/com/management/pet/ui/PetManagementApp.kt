@@ -1,4 +1,4 @@
-package com.management.pet
+package com.management.pet.ui
 
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -8,8 +8,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.management.pet.repository.MemoryPetProfileDataSource
 import com.management.pet.repository.PetProfileDataSource
+import com.management.pet.repository.entity.Schedule
 import com.management.pet.state.PetListState
-import com.management.pet.ui.PetManagementNavGraph
+import java.time.ZoneId
 
 @Composable
 fun PetManagementApp () {

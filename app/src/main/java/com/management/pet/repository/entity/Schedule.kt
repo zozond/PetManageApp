@@ -9,8 +9,7 @@ import java.time.Duration
 data class Schedule(
     val name: String,
     val schedule: LocalDate,
-    val duration: Duration
-) {
+    val duration: Duration,
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0
-}
+)
