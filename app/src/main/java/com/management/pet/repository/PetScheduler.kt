@@ -26,19 +26,8 @@ class PetScheduler (
     }
 
     fun cancelSchedule(schedule: Schedule){
-        alarmManager.cancel(getPendingIntent(schedule))
-    }
-//
-//    fun getAlarm() : String{
-//        return alarmManager.nextAlarmClock.toString()
-//    }
-
-    fun getAlarms() {
-        var aci: AlarmClockInfo? = alarmManager.nextAlarmClock
-        while (aci != null) {
-            println(aci.showIntent.toString())
-            println(String.format("Trigger time: %d", aci.triggerTime))
-            aci = alarmManager.nextAlarmClock
-        }
+        val pendingIntent = getPendingIntent(schedule)
+        alarmManager.cancel(pendingIntent)
+        pendingIntent.cancel()
     }
 }
