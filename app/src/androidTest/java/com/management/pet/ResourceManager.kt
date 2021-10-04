@@ -3,8 +3,8 @@ package com.management.pet
 import com.management.pet.repository.DataSource
 import com.management.pet.repository.MemoryPetProfileDataSource
 import com.management.pet.repository.MemoryScheduleDataSource
-import com.management.pet.repository.entity.PetProfile
-import com.management.pet.repository.entity.Schedule
+import com.management.pet.profiles.PetProfile
+import com.management.pet.schedules.Schedule
 
 class ResourceManager {
     private val petDataSource: DataSource<MutableList<PetProfile>> = MemoryPetProfileDataSource
@@ -17,49 +17,10 @@ class ResourceManager {
         }
     }
 
-    fun registerPetProfile(petProfile: PetProfile) {
-        petDataSource.update {
-            add(petProfile)
-        }
-    }
-
-    fun removePetProfile(petProfile: PetProfile) {
-        petDataSource.update {
-            remove(petProfile)
-        }
-    }
-
-    fun updatePetProfile(before: PetProfile, after: PetProfile) {
-        petDataSource.update {
-            val i = indexOf(before)
-            set(i, after)
-        }
-    }
-
-
     fun loadSchedule(schedule: List<Schedule>) {
         scheduleDataSource.update {
             clear()
             addAll(schedule)
-        }
-    }
-
-    fun registerSchedule(schedule: Schedule) {
-        scheduleDataSource.update {
-            add(schedule)
-        }
-    }
-
-    fun removeSchedule(schedule: Schedule) {
-        scheduleDataSource.update {
-            remove(schedule)
-        }
-    }
-
-    fun updateSchedule(before: Schedule, after: Schedule) {
-        scheduleDataSource.update {
-            val i = indexOf(before)
-            set(i, after)
         }
     }
 }

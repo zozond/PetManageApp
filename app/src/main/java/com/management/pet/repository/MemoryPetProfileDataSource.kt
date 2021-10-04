@@ -1,7 +1,6 @@
 package com.management.pet.repository
 
-import com.management.pet.repository.entity.PetProfile
-
+import com.management.pet.profiles.PetProfile
 
 object MemoryPetProfileDataSource: PetProfileDataSource {
     private val pets = mutableListOf<PetProfile>()

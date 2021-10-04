@@ -1,4 +1,4 @@
-package com.management.pet
+package com.management.pet.ui
 
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -6,28 +6,15 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.management.pet.repository.MemoryPetProfileDataSource
-import com.management.pet.repository.PetProfileDataSource
-import com.management.pet.state.PetListState
-import com.management.pet.ui.PetManagementNavGraph
 
 @Composable
 fun PetManagementApp () {
     val navController = rememberNavController()
-    var petListState: PetListState by remember { mutableStateOf(PetListState(
-        MemoryPetProfileDataSource.value)) }
-    val petDataSource: PetProfileDataSource by remember {
-        MemoryPetProfileDataSource.observe {
-            petListState = PetListState(it)
-        }
-        mutableStateOf(MemoryPetProfileDataSource)
-    }
-
-    MainScreen(petListState, navController)
+    Main(navController)
 }
 
 @Composable
-fun MainScreen(petListState: PetListState, navHostController: NavHostController) {
+fun Main(navHostController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -37,6 +24,6 @@ fun MainScreen(petListState: PetListState, navHostController: NavHostController)
             )
         }
     ) {
-        PetManagementNavGraph(navController = navHostController, petListState);
+        PetManagementNavGraph(navHostController)
     }
 }

@@ -1,13 +1,11 @@
 package com.management.pet.repository
 
 import android.app.AlarmManager
-import android.app.AlarmManager.AlarmClockInfo
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.management.pet.AlarmReceiver
-import com.management.pet.repository.entity.Schedule
+import com.management.pet.schedules.Schedule
 import java.time.ZoneId
 
 class PetScheduler (

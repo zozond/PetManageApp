@@ -8,7 +8,7 @@ import androidx.core.content.getSystemService
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.management.pet.repository.PetScheduler
-import com.management.pet.repository.entity.Schedule
+import com.management.pet.schedules.Schedule
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before

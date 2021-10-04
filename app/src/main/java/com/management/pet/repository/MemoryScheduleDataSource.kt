@@ -1,6 +1,6 @@
 package com.management.pet.repository
 
-import com.management.pet.repository.entity.Schedule
+import com.management.pet.schedules.Schedule
 
 
 object MemoryScheduleDataSource: ScheduleDataSource {
