@@ -38,8 +38,4 @@ class PetProfileMemoryRepository: PetProfileRepository {
     fun reset() {
         pets.clear()
     }
-
-    private fun PetProfile.assign(change: PetProfileChange): PetProfile {
-        return PetProfile(change.name ?: name, uid=uid)
-    }
 }

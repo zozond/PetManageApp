@@ -1,13 +1,13 @@
 package com.management.pet.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.management.pet.ui.screens.PetList
+import com.management.pet.ui.screens.RegisterPetProfiles
 import com.management.pet.ui.screens.ScheduleList
 
 object MainDestinations {
@@ -18,7 +18,7 @@ object MainDestinations {
 
 @Composable
 fun PetManagementNavGraph(
-    navController: NavHostController,
+    navController: NavHostController = rememberNavController(),
 ) {
     NavHost(
         navController = navController,
@@ -26,26 +26,12 @@ fun PetManagementNavGraph(
     ) {
         composable(MainDestinations.HOME_ROUTE) {
             Column {
-                PetList(navController)
-                ScheduleList(navController)
+                PetList()
+                ScheduleList()
             }
         }
         composable(MainDestinations.REGISTER_ROUTE) {
-            Register(navController)
+            RegisterPetProfiles(navController)
         }
-    }
-}
-
-
-@Composable
-fun Register(
-    navController: NavHostController
-) {
-    Column {
-        Text(text = "register")
-    }
-
-    Button(onClick = { navController.navigate("home") }) {
-        Text(text = "register button")
     }
 }

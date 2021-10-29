@@ -5,14 +5,11 @@ import androidx.compose.ui.test.junit4.ComposeTestRule
 import com.management.pet.profiles.PetProfile
 import com.management.pet.profiles.PetProfileChange
 import com.management.pet.schedules.Schedule
+import com.management.pet.schedules.ScheduleChange
 
 class ApplicationRunner(
     private val composeRule: ComposeTestRule
 ) {
-    private fun PetProfile.assign(change: PetProfileChange): PetProfile {
-        return PetProfile(change.name ?: name, uid=uid)
-    }
-
     fun openApp() {
         composeRule.waitForIdle()
     }
@@ -20,12 +17,6 @@ class ApplicationRunner(
     fun hasPetProfile(petProfile: PetProfile) {
         composeRule
             .onNodeWithText(petProfile.name)
-            .assertIsDisplayed()
-    }
-
-    fun hasPetProfileWithChange(petProfile: PetProfile, change: PetProfileChange) {
-        composeRule
-            .onNodeWithText(petProfile.assign(change).name)
             .assertIsDisplayed()
     }
 
@@ -71,12 +62,6 @@ class ApplicationRunner(
             .assertIsDisplayed()
     }
 
-    fun hasScheduleName(s: String) {
-        composeRule
-            .onNodeWithText(s)
-            .assertIsDisplayed()
-    }
-
     fun hasNotSchedule(schedule: Schedule) {
         composeRule
             .onNodeWithText(schedule.name)
@@ -95,13 +80,13 @@ class ApplicationRunner(
             .performClick()
     }
 
-    fun updateSchedule(schedule: Schedule) {
+    fun updateSchedule(schedule: Schedule, scheduleChange: ScheduleChange) {
         composeRule
             .onNodeWithTag("schedule_id")
             .performTextInput(schedule.uid.toString())
         composeRule
             .onNodeWithTag("schedule_name")
-            .performTextInput(schedule.name)
+            .performTextInput(scheduleChange.name ?: schedule.name)
         composeRule
             .onNodeWithTag("schedule_update")
             .performClick()
@@ -120,6 +105,14 @@ class ApplicationRunner(
     }
 
     fun removeSchedule(unusedSchedule: Schedule) {
-        TODO("Not yet implemented")
+        composeRule
+            .onNodeWithTag("schedule_id")
+            .performTextInput(unusedSchedule.uid.toString())
+        composeRule
+            .onNodeWithTag("schedule_name")
+            .performTextInput(unusedSchedule.name)
+        composeRule
+            .onNodeWithTag("schedule_remove")
+            .performClick()
     }
 }

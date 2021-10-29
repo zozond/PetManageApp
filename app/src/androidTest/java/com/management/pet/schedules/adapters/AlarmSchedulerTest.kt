@@ -1,4 +1,4 @@
-package com.management.pet
+package com.management.pet.schedules.adapters
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -7,8 +7,9 @@ import android.content.Intent
 import androidx.core.content.getSystemService
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.management.pet.repository.PetScheduler
+import com.management.pet.AlarmReceiver
 import com.management.pet.schedules.Schedule
+import com.management.pet.schedules.ScheduleChange
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -16,6 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.Duration
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 /**
  * Intents 사용 보류
@@ -23,15 +25,15 @@ import java.time.LocalDate
  */
 
 @RunWith(AndroidJUnit4::class)
-class ScheduleTests {
-    private lateinit var scheduler: PetScheduler
+class AlarmSchedulerTest {
+    private lateinit var scheduler: AlarmScheduler
     private lateinit var context: Context
     @Before
     fun setUp() {
 //        Intents.init()
         context = InstrumentationRegistry.getInstrumentation().targetContext
         val alarmManager = context.getSystemService<AlarmManager>()!!
-        scheduler = PetScheduler(context, alarmManager)
+        scheduler = AlarmScheduler(context, alarmManager)
     }
 
 //      @Test
@@ -52,9 +54,9 @@ class ScheduleTests {
     }
 
     @Test
-    fun registerScheduleTest(){
+    fun addScheduleTest() {
         // given
-        val schedule = Schedule("test", LocalDate.now(), Duration.ZERO)
+        val schedule = Schedule("test", LocalDateTime.now(), Duration.ZERO)
 
         // when
         scheduler.addSchedule(schedule)
@@ -64,9 +66,9 @@ class ScheduleTests {
     }
 
     @Test
-    fun cancelScheduleTest(){
+    fun cancelScheduleTest() {
         // given
-        val schedule = Schedule("test", LocalDate.now(), Duration.ZERO)
+        val schedule = Schedule("test", LocalDateTime.now(), Duration.ZERO)
 
         // when
         scheduler.addSchedule(schedule)
@@ -76,10 +78,23 @@ class ScheduleTests {
         Assert.assertEquals(false, isSetSchedule(schedule))
     }
 
+    @Test
+    fun updateScheduleTest() {
+        // TODO: 좋은 방법이 있나?
+        // given
+        val schedule = Schedule("old", LocalDateTime.now(), Duration.ZERO)
+        val scheduleChange = ScheduleChange("new")
+
+        // when
+
+        // then
+    }
+
     private fun isSetSchedule(schedule: Schedule) : Boolean {
         val intent = Intent(context, AlarmReceiver::class.java)
+        intent.putExtra(AlarmScheduler.EXTRA_SCHEDULE_ID, schedule.uid)
         // null = 설정된 알람 없음
         // not null = 설정된 알람 있음
-        return PendingIntent.getBroadcast(context, schedule.uid, intent, PendingIntent.FLAG_NO_CREATE) != null
+        return PendingIntent.getBroadcast(context, AlarmScheduler.ALARM_REQUEST_CODE, intent, PendingIntent.FLAG_NO_CREATE) != null
     }
 }

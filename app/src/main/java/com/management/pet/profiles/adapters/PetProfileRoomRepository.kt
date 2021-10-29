@@ -8,7 +8,9 @@ import com.management.pet.profiles.entity.PetProfileEntityDAO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class PetProfileRoomRepository(private val dao: PetProfileEntityDAO): PetProfileRepository {
+class PetProfileRoomRepository(
+    private val dao: PetProfileEntityDAO
+): PetProfileRepository {
     override fun readAll(): Flow<List<PetProfile>> {
         return dao.getAll().map { list -> list.map { it.toPetProfile() } }
     }
@@ -23,10 +25,6 @@ class PetProfileRoomRepository(private val dao: PetProfileEntityDAO): PetProfile
 
     override fun remove(profile: PetProfile) {
         dao.delete(profile.toEntity())
-    }
-
-    private fun PetProfile.assign(change: PetProfileChange): PetProfile {
-        return PetProfile(change.name ?: name, uid=uid)
     }
 
     private fun PetProfileEntity.toPetProfile(): PetProfile {

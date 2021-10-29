@@ -8,20 +8,20 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.asLiveData
-import androidx.navigation.NavHostController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.management.pet.profiles.PetProfile
 import com.management.pet.profiles.PetProfileChange
-import com.management.pet.profiles.PetProfileRepository
-import com.management.pet.profiles.PetProfilesViewModel
-import com.management.pet.profiles.adapters.PetProfileMemoryRepository
-import com.management.pet.profiles.adapters.PetProfilesLiveDataViewModel
+import com.management.pet.profiles.PetProfileViewModel
+import com.management.pet.profiles.adapters.PetProfileLiveDataViewModel
+import com.management.pet.profiles.adapters.PetProfileViewModelFactory
 
 @Composable
-fun PetList(navController: NavHostController) {
-    val repository: PetProfileRepository = PetProfileMemoryRepository()
-    val viewModel: PetProfilesViewModel = PetProfilesLiveDataViewModel(repository)
+fun PetList(
+    viewModel: PetProfileViewModel = viewModel<PetProfileLiveDataViewModel>(factory = PetProfileViewModelFactory(LocalContext.current))
+) {
     val petProfiles by viewModel.petProfiles().asLiveData().observeAsState()
 
     var id by remember { mutableStateOf(0) }

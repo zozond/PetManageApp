@@ -4,10 +4,9 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.management.pet.profiles.PetProfileChange
 import com.management.pet.profiles.PetProfile
-import com.management.pet.profiles.PetProfileRepository
-import com.management.pet.profiles.adapters.PetProfileMemoryRepository
 import com.management.pet.schedules.Schedule
 import com.management.pet.schedules.ScheduleChange
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -16,37 +15,31 @@ import java.time.*
 
 @RunWith(AndroidJUnit4::class)
 class EndToEndTests {
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     private lateinit var app: ApplicationRunner
-    private lateinit var petProfileRepository: PetProfileRepository
-    private lateinit var resourceManager: ResourceManager
+    private lateinit var db: MemoryRoom
 
     @Before
     fun setUp() {
+        db = MemoryRoom()
         app = ApplicationRunner(composeTestRule)
-        petProfileRepository = PetProfileMemoryRepository().apply { reset() }
-        resourceManager = ResourceManager()
     }
 
-    /**
-     * 펫 프로필(이름): 불러오기
-     * */
-    @Test
-    fun loadPetProfiles() {
-        val profiles = listOf(
-            PetProfile("dog"),
-            PetProfile("cat"),
-            PetProfile("bird")
-        )
+    @After
+    fun tearDown() {
+        db.close()
+    }
 
-        profiles.forEach(petProfileRepository::add)
+    @Test
+    fun loadPetProfile() {
+        val petProfile = PetProfile("dog")
+
+        db.addPetProfile(petProfile)
+
         app.openApp()
-        for(pet in profiles){
-            app.hasPetProfile(pet)
-        }
+        app.hasPetProfile(petProfile)
     }
 
     /**
@@ -54,7 +47,7 @@ class EndToEndTests {
      * */
     @Test
     fun addPetProfile() {
-        val petProfile = PetProfile("doge")
+        val petProfile = PetProfile("doge", 1)
 
         app.openApp()
         app.addPetProfile(petProfile)
@@ -66,7 +59,7 @@ class EndToEndTests {
      * */
     @Test
     fun addPetProfileAndRemoveIt() {
-        val removedProfile = PetProfile("dog")
+        val removedProfile = PetProfile("dog", 1)
 
         app.openApp()
         app.addPetProfile(removedProfile)
@@ -79,21 +72,32 @@ class EndToEndTests {
      * */
     @Test
     fun addPetProfileAndUpdateIt() {
-        val profile = PetProfile("dog")
+        val oldPetProfile = PetProfile("dog", 1)
         val change = PetProfileChange(name = "doge")
+        val newPetProfile = oldPetProfile.assign(change)
 
         app.openApp()
-        app.addPetProfile(profile)
-        app.updatePetProfile(profile, change)
-        app.hasPetProfileWithChange(profile, change)
+        app.addPetProfile(oldPetProfile)
+        app.updatePetProfile(oldPetProfile, change)
+        app.hasPetProfile(newPetProfile)
+    }
+
+    @Test
+    fun loadSchedule() {
+        val schedule = Schedule("test", LocalDateTime.now(), Duration.ZERO, 1)
+
+        db.addSchedule(schedule)
+
+        app.openApp()
+        app.hasSchedule(schedule)
     }
 
     /**
      *  - 스케줄(이름, 시간): 저장
      * */
     @Test
-    fun saveSchedule() {
-        val schedule = Schedule("test", LocalDate.now(), Duration.ZERO)
+    fun addSchedule() {
+        val schedule = Schedule("test", LocalDateTime.now(), Duration.ZERO, 1)
 
         app.openApp()
         app.addSchedule(schedule)
@@ -101,29 +105,11 @@ class EndToEndTests {
     }
 
     /**
-     *  - 스케줄(이름, 시간): 불러오기
-     * */
-    @Test
-    fun loadSchedule() {
-        val schedules = listOf(
-            Schedule("first", LocalDate.now(), Duration.ZERO),
-            Schedule("second", LocalDate.now(), Duration.ZERO),
-            Schedule("third", LocalDate.now(), Duration.ZERO)
-        )
-
-        resourceManager.loadSchedule(schedules)
-        app.openApp()
-        for(schedule in schedules){
-            app.hasSchedule(schedule)
-        }
-    }
-
-    /**
      *  - 스케줄(이름, 시간): 삭제
      * */
     @Test
-    fun removeSchedule() {
-        val unusedSchedule = Schedule("unused", LocalDate.now(), Duration.ZERO)
+    fun addScheduleAndRemoveIt() {
+        val unusedSchedule = Schedule("unused", LocalDateTime.now(), Duration.ZERO, 1)
 
         app.openApp()
         app.addSchedule(unusedSchedule)
@@ -135,14 +121,14 @@ class EndToEndTests {
      *  - 스케줄(이름, 시간): 수정
      * */
     @Test
-    fun modifySchedule() {
-        val oldSchedule = Schedule("old", LocalDate.now(), Duration.ZERO)
-        val change = ScheduleChange(name="new")
+    fun addScheduleAndUpdateIt() {
+        val oldSchedule = Schedule("old", LocalDateTime.now(), Duration.ZERO, 1)
+        val change = ScheduleChange("new")
         val newSchedule = oldSchedule.assign(change)
 
         app.openApp()
         app.addSchedule(oldSchedule)
-        app.updateSchedule(newSchedule)
+        app.updateSchedule(oldSchedule, change)
         app.hasSchedule(newSchedule)
     }
 }

@@ -1,20 +1,20 @@
 package com.management.pet.schedules
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.management.pet.profiles.PetProfile
-import java.time.LocalDate
 import java.time.Duration
+import java.time.LocalDateTime
+import java.time.ZoneId
 
-@Entity
 data class Schedule(
     val name: String,
-    val schedule: LocalDate,
+    val schedule: LocalDateTime,
     val duration: Duration,
-    @PrimaryKey(autoGenerate = true)
     var uid: Int = 0
 ) {
     fun assign(change: ScheduleChange): Schedule {
         return Schedule(change.name ?: name, schedule, duration, uid=uid)
+    }
+
+    fun scheduleToEpochMillis(): Long {
+        return schedule.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
     }
 }
